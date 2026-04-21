@@ -74,7 +74,7 @@ function App() {
 
       <div className="glass-container">
         <h1>Check Your password </h1>
-        <p className="subtitle">Check your password strength</p>
+        <p className="subtitle">strength</p>
 
         <div className="input-group">
           <Lock className="input-icon" size={20} />
