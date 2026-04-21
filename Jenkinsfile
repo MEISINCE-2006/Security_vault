@@ -19,7 +19,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(['ec2-key']) {
+                sshagent(['passstren']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} << EOF
                     cd app || git clone https://github.com/MEISINCE-2006/Security_vault.git app
