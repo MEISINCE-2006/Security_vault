@@ -73,7 +73,7 @@ function App() {
       </div>
 
       <div className="glass-container">
-        <h1>Check Your password </h1>
+        <h1>Check Your Password </h1>
         <p className="subtitle">strength</p>
 
         <div className="input-group">
