@@ -25,13 +25,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 bat """
-                ssh -i D:\\DOWNLOADS\\devops.pem -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} ^
-                "if [ ! -d app ]; then git clone ${REPO_URL} app; fi && ^
-                cd app && ^
-                git pull origin main && ^
-                cd backend && ^
-                npm install && ^
-                pm2 restart all || pm2 start index.js"
+                ssh -i D:\\DOWNLOADS\\devops.pem -o StrictHostKeyChecking=no ubuntu@${SERVER_IP} "if [ ! -d app ]; then git clone ${REPO_URL} app; fi && cd app && git pull origin main && cd backend && npm install && pm2 restart all || pm2 start index.js"
                 """
             }
         }
