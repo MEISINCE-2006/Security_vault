@@ -73,7 +73,7 @@ function App() {
       </div>
 
       <div className="glass-container">
-        <h1>SecureVault</h1>
+        <h1>Check Your password </h1>
         <p className="subtitle">Check your password strength</p>
 
         <div className="input-group">
@@ -98,11 +98,11 @@ function App() {
         <div className="strength-section">
           <div className="strength-header">
             <span>Strength:</span>
-            <span style={{ 
-              color: password.length > 0 
-                ? (strength === 4 ? 'var(--strength-4)' : 
-                   strength === 3 ? 'var(--strength-2)' : 
-                   strength === 2 ? 'var(--strength-1)' : 'var(--strength-0)') 
+            <span style={{
+              color: password.length > 0
+                ? (strength === 4 ? 'var(--strength-4)' :
+                  strength === 3 ? 'var(--strength-2)' :
+                    strength === 2 ? 'var(--strength-1)' : 'var(--strength-0)')
                 : 'var(--text-secondary)'
             }}>
               {getStrengthLabel()}
