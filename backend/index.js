@@ -8,12 +8,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection (Optional: using local for now or skipping strict connection check if not set up)
-// mongoose.connect('mongodb://localhost:27017/password-strength', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }).then(() => console.log('Connected to MongoDB'))
-//   .catch(err => console.error('MongoDB connection error:', err));
+let logs = [];
+
+function addLog(message) {
+  const logMsg = `[${new Date().toLocaleTimeString()}] ${message}`;
+  logs.push(logMsg);
+  console.log(logMsg);
+}
 
 const passwordSchema = new mongoose.Schema({
   password: { type: String, required: true },
@@ -24,29 +25,32 @@ const passwordSchema = new mongoose.Schema({
 
 const Password = mongoose.model('Password', passwordSchema);
 
-// Endpoint to save a checked password
 app.post('/api/passwords', async (req, res) => {
   try {
     const { password, strength, score } = req.body;
-    
-    // Create new password entry
-    // const newPassword = new Password({ password, strength, score });
-    // await newPassword.save();
-    
-    // Since MongoDB might not be running locally, we will just return success for the mockup.
-    // Uncomment above lines if MongoDB is guaranteed to run.
 
-    res.status(201).json({ message: 'Password evaluation saved successfully!', data: { password, strength, score } });
+    addLog(`Password checked → Strength: ${strength}, Score: ${score}`);
+
+    res.status(201).json({
+      message: 'Password evaluation saved successfully!',
+      data: { password, strength, score }
+    });
+
   } catch (error) {
-    console.error(error);
+    addLog(`Error: ${error.message}`);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
 app.get('/api/health', (req, res) => {
+  addLog("Health API called");
   res.status(200).json({ status: 'OK' });
 });
 
+app.get('/logs', (req, res) => {
+  res.json(logs);
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  addLog(`Server running on port ${PORT}`);
 });
