@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,40 +18,46 @@ function addLog(message) {
 }
 
 const passwordSchema = new mongoose.Schema({
-  password: { type: String, required: true },
-  strength: { type: String, required: true },
-  score: { type: Number, required: true },
-  createdAt: { type: Date, default: Date.now }
+ password:String,
+ strength:String,
+ score:Number,
+ createdAt:{type:Date,default:Date.now}
 });
 
-const Password = mongoose.model('Password', passwordSchema);
+mongoose.model('Password',passwordSchema);
 
-app.post('/api/passwords', async (req, res) => {
-  try {
-    const { password, strength, score } = req.body;
+app.post('/api/passwords', async (req,res)=>{
+ try{
+   const {password,strength,score}=req.body;
 
-    addLog(`Password checked → Strength: ${strength}, Score: ${score}`);
+   addLog(`Password checked → Strength: ${strength}, Score: ${score}`);
 
-    res.status(201).json({
-      message: 'Password evaluation saved successfully!',
-      data: { password, strength, score }
-    });
+   res.status(201).json({
+      message:'Password evaluation saved successfully',
+      data:{password,strength,score}
+   });
 
-  } catch (error) {
-    addLog(`Error: ${error.message}`);
-    res.status(500).json({ message: 'Server error' });
-  }
+ } catch(error){
+   addLog(`Error: ${error.message}`);
+   res.status(500).json({message:'Server error'});
+ }
 });
 
-app.get('/api/health', (req, res) => {
-  addLog("Health API called");
-  res.status(200).json({ status: 'OK' });
+app.get('/api/health',(req,res)=>{
+ addLog('Health API called');
+ res.json({status:'OK'});
 });
 
-app.get('/logs', (req, res) => {
-  res.json(logs);
+app.get('/logs',(req,res)=>{
+ res.json(logs);
 });
 
-app.listen(PORT, () => {
-  addLog(`Server running on port ${PORT}`);
+app.use(express.static(path.join(__dirname,'../frontend/dist')));
+
+app.get('*',(req,res)=>{
+ res.sendFile(path.join(__dirname,'../frontend/dist/index.html'));
+});
+
+app.listen(PORT,'0.0.0.0',()=>{
+ addLog(`Server running on port ${PORT}`);
 });
