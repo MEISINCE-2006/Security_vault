@@ -11,10 +11,10 @@ app.use(express.json());
 
 let logs = [];
 
-function addLog(message) {
-  const logMsg = `[${new Date().toLocaleTimeString()}] ${message}`;
-  logs.push(logMsg);
-  console.log(logMsg);
+function addLog(message){
+ const logMsg = `[${new Date().toLocaleTimeString()}] ${message}`;
+ logs.push(logMsg);
+ console.log(logMsg);
 }
 
 const passwordSchema = new mongoose.Schema({
@@ -26,18 +26,18 @@ const passwordSchema = new mongoose.Schema({
 
 mongoose.model('Password',passwordSchema);
 
-app.post('/api/passwords', async (req,res)=>{
+app.post('/api/passwords',async(req,res)=>{
  try{
    const {password,strength,score}=req.body;
 
    addLog(`Password checked → Strength: ${strength}, Score: ${score}`);
 
    res.status(201).json({
-      message:'Password evaluation saved successfully',
-      data:{password,strength,score}
+     message:'Password evaluation saved successfully',
+     data:{password,strength,score}
    });
 
- } catch(error){
+ }catch(error){
    addLog(`Error: ${error.message}`);
    res.status(500).json({message:'Server error'});
  }
@@ -54,7 +54,7 @@ app.get('/logs',(req,res)=>{
 
 app.use(express.static(path.join(__dirname,'../frontend/dist')));
 
-app.get('*',(req,res)=>{
+app.get('/',(req,res)=>{
  res.sendFile(path.join(__dirname,'../frontend/dist/index.html'));
 });
 
