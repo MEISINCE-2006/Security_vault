@@ -32,6 +32,7 @@ function App() {
     });
 
     let score = 0;
+
     if (hasLength) score++;
     if (hasLower) score++;
     if (hasUpper) score++;
@@ -41,21 +42,22 @@ function App() {
   };
 
   const getStrengthLabel = () => {
-    if (password.length === 0) return 'Enter a password';
-    if (strength <= 1) return 'Weak';
-    if (strength === 2) return 'Fair';
-    if (strength === 3) return 'Good';
-    if (strength === 4) return 'Strong';
+    if(password.length===0) return 'Enter a password';
+    if(strength<=1) return 'Weak';
+    if(strength===2) return 'Fair';
+    if(strength===3) return 'Good';
+    if(strength===4) return 'Strong';
     return '';
   };
 
   const getStrengthColor = (index) => {
-    if (index >= strength || password.length === 0)
+    if(index >= strength || password.length===0)
       return 'rgba(255,255,255,0.1)';
-    if (strength === 1) return 'var(--strength-0)';
-    if (strength === 2) return 'var(--strength-1)';
-    if (strength === 3) return 'var(--strength-2)';
-    if (strength === 4) return 'var(--strength-4)';
+
+    if(strength===1) return 'var(--strength-0)';
+    if(strength===2) return 'var(--strength-1)';
+    if(strength===3) return 'var(--strength-2)';
+    if(strength===4) return 'var(--strength-4)';
   };
 
   return (
@@ -77,13 +79,13 @@ function App() {
             className="password-input"
             placeholder="Enter your password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e)=>setPassword(e.target.value)}
           />
 
           <button
             type="button"
             className="toggle-visibility"
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={()=>setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
           </button>
@@ -101,7 +103,7 @@ function App() {
                 key={index}
                 className="bar"
                 style={{
-                  backgroundColor: getStrengthColor(index)
+                  backgroundColor:getStrengthColor(index)
                 }}
               ></div>
             ))}
@@ -109,28 +111,29 @@ function App() {
         </div>
 
         <div className="requirements-list">
-          <div className={`requirement-item ${reqs.length ? 'met':''}`}>
+
+          <div className={`requirement-item ${reqs.length ? 'met' : ''}`}>
             <div className="req-icon">
               {reqs.length ? <Check size={12}/> : <X size={12}/>}
             </div>
             <span>At least 8 characters</span>
           </div>
 
-          <div className={`requirement-item ${reqs.uppercase ? 'met':''}`}>
+          <div className={`requirement-item ${reqs.uppercase ? 'met' : ''}`}>
             <div className="req-icon">
               {reqs.uppercase ? <Check size={12}/> : <X size={12}/>}
             </div>
             <span>One uppercase letter</span>
           </div>
 
-          <div className={`requirement-item ${reqs.lowercase ? 'met':''}`}>
+          <div className={`requirement-item ${reqs.lowercase ? 'met' : ''}`}>
             <div className="req-icon">
               {reqs.lowercase ? <Check size={12}/> : <X size={12}/>}
             </div>
             <span>One lowercase letter</span>
           </div>
 
-          <div className={`requirement-item ${reqs.special ? 'met':''}`}>
+          <div className={`requirement-item ${reqs.special ? 'met' : ''}`}>
             <div className="req-icon">
               {reqs.special ? <Check size={12}/> : <X size={12}/>}
             </div>
@@ -138,6 +141,7 @@ function App() {
           </div>
 
         </div>
+
       </div>
     </>
   );
